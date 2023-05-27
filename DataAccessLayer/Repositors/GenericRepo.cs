@@ -44,6 +44,11 @@ namespace DataAccessLayer.Repositors
             return await RelatedEntities.ToListAsync();
         }
 
+        public async Task<T> GetByID(int id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+
         public async Task<T> UpdateOne(T entity)
         {
             _context.Set<T>().Update(entity);

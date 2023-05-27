@@ -8,6 +8,7 @@ namespace DataAccessLayer.Repositors.Base
 {
     public interface IGenericRepo<T> where T : class
     {
+        Task<T> GetByID(int id);
         Task<IEnumerable<T>> GetAllEntries(string[]? includes = null);
         Task AddNewOne(T entity);
         Task<T> UpdateOne(T entity);

@@ -1,4 +1,5 @@
-﻿using EDIG_Api_Task.Entity;
+﻿using DataAccessLayer.Repositors.Base;
+using EDIG_Api_Task.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Services.OrderService
 {
-    public class OrderService
+    public class OrderService:IOrderService
     {
-        private readonly IOrderService _orderService;
-        public OrderService(IOrderService orderService)
+        private readonly IGenericRepo<Order> _orderService;
+        public OrderService(IGenericRepo<Order> orderService)
         {
             _orderService = orderService;
         }
-        public async Task<IEnumerable<Order>> GetAllOrders()
+        public async Task<IEnumerable<Order>> GetAllOrders(string[]? includes = null)
         {
             try
             {
-                return await _orderService.GetAllEntries();
+                return await _orderService.GetAllEntries(includes);
             }
             catch (Exception)
             {
@@ -74,6 +75,10 @@ namespace BusinessLayer.Services.OrderService
                 throw;
             }
         }
-        
+
+        public async Task<Order> GetOrderByID(int orderId)
+        {
+            return await _orderService.GetByID(orderId);
+        }
     }
 }

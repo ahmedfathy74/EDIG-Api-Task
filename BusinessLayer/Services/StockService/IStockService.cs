@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Services.StockService
 {
-    public interface IStockService : IGenericRepo<Stock>
+    public interface IStockService 
     {
+        Task<IEnumerable<Stock>> GetAllStocks();
+        Task AddStock(Stock stock);
+        Task<Stock> Updatestock(Stock stock);
+        Task DeleteStock(int id);
     }
 }

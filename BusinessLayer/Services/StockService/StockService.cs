@@ -1,4 +1,5 @@
-﻿using EDIG_Api_Task.Entity;
+﻿using DataAccessLayer.Repositors.Base;
+using EDIG_Api_Task.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Services.StockService
 {
-    public class StockService
+    public class StockService : IStockService
     {
-        private readonly IStockService _stockService;
-        public StockService(IStockService stockService)
+        private readonly IGenericRepo<Stock> _stockService;
+        public StockService(IGenericRepo<Stock> stockService)
         {
             _stockService = stockService;
         }

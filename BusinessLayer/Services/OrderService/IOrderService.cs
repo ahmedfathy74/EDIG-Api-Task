@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Services.OrderService
 {
-    public interface IOrderService : IGenericRepo<Order>
+    public interface IOrderService 
     {
-
+        Task<IEnumerable<Order>> GetAllOrders(string[]? includes = null);
+        Task AddOrder(Order order);
+        Task<Order> UpdateOrder(Order order);
+        Task DeleteOrder(int id);
+        Task<Order>GetOrderByID(int orderId);
     }
 }
