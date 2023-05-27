@@ -30,7 +30,7 @@ namespace EDIG_Api_Task.Controllers
             _random = new Random();
             _stockPriceHubContext = stockPriceHubContext;
             _lock = new object();
-            InitializeStockPrices();
+            //InitializeStockPrices();
 
             // Initialize the timer to update stock prices every 10 seconds
             //_timer = new Timer(UpdateStockPrices, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));

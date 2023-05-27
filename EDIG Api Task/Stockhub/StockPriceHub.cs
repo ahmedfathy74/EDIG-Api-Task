@@ -39,9 +39,8 @@ namespace DataAccessLayer.Models
                     {
                         stock.Price = _random.Next(1, 100);
                     }
-
+                    await _context.SaveChangesAsync();
                     await Clients.All.SendAsync("ReceiveStockPriceUpdate", stocks);
-
                     await Task.Delay(TimeSpan.FromSeconds(10));
                 }
             }

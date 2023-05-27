@@ -45,7 +45,7 @@ namespace EDIG_Api_Task.Controllers
             {
                 PersonName = Orderdto.PersonName,
                 Quantity = Orderdto.Quantity,
-                Price = currentStock.Price,
+                Price = currentStock.Price * Orderdto.Quantity,
                 StockID = Orderdto.StockID
             };
             await _orderService.AddOrder(order);
@@ -54,16 +54,22 @@ namespace EDIG_Api_Task.Controllers
         // for admin only
         [HttpPut]
         [ProducesResponseType(typeof(Order), StatusCodes.Status201Created)]
-        public async Task<ActionResult> UpdateOrder(OrderDto DepDto)
+        public async Task<ActionResult> UpdateOrder(OrderDto Orderdto)
         {
-            var order = await _orderService.GetOrderByID(DepDto.OrderId);
+            var order = await _orderService.GetOrderByID(Orderdto.OrderId);
             if (order is null)
             {
-                return NotFound($"No order Was Found with ID: {DepDto.OrderId}");
+                return NotFound($"No order Was Found with ID: {Orderdto.OrderId}");
             }
-            order.PersonName= DepDto.PersonName;
-            order.Quantity = DepDto.Quantity;
-            order.StockID = DepDto.StockID;
+            var currentStock = _context.Stocks.Find(Orderdto.StockID);
+            if (currentStock == null)
+            {
+                return BadRequest();
+            }
+            order.PersonName= Orderdto.PersonName;
+            order.Quantity = Orderdto.Quantity;
+            order.Price = currentStock.Price * Orderdto.Quantity;
+            order.StockID = Orderdto.StockID;
 
             return Ok(await _orderService.UpdateOrder(order));
         }
